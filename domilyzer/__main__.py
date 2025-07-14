@@ -47,6 +47,7 @@ def main():
             ch3_lut = gui.channel3_var
             ch4_lut = gui.channel4_var
             microscope_type = gui.microscope_type
+            folder_of_folders = gui.folder_of_folders
             
         # If user specifies Olympus workflow, run Olympus GUI
         if microscope_type == 'Olympus':
@@ -110,10 +111,11 @@ def main():
     imagej_tags = createImageJMetadataTags(LUTs = {'LUTs': [ch1_lut, ch2_lut, ch3_lut, ch4_lut]},
                                            byteorder = '>')
     
-    if microscope_type != 'Flamingo':
-        # Get the Bruker image folders
+    # Get the Bruker image folders
+    if folder_of_folders == True or microscope_type != 'Flamingo':
         image_folders = sorted([folder for folder in os.listdir(parent_folder_path) if os.path.isdir(os.path.join(parent_folder_path, folder))])
-    
+
+    if microscope_type != 'Flamingo':
         # Initialize output folders, logging, and metadata CSV outout paths
         if not manual_test:
             processed_images_path, scope_folders_path = initializeOutputFolders(parent_folder_path = parent_folder_path)
@@ -154,7 +156,8 @@ def main():
     elif microscope_type == 'Flamingo':
         processFlamingoImages(parent_folder_path=parent_folder_path,
                                 projection_type=projection_type,
-                                imagej_tags=imagej_tags
+                                imagej_tags=imagej_tags,
+                                image_folders=image_folders if folder_of_folders else None
                                 )
           
     if microscope_type != 'Flamingo' and manual_test == False: # not doing olympus for testing for now  
