@@ -32,6 +32,7 @@ def main():
         ch4_lut = gui.channel4_var
         microscope_type = gui.microscope_type
         auto_metadata_extract = gui.auto_metadata_extraction
+        folder_of_folders = True # set to True because only needed for Flamingo workflow
         
         # If user specifies Flamingo workflow, run Flamingo GUI
         if microscope_type == 'Flamingo':
@@ -64,6 +65,7 @@ def main():
             ch3_lut = gui.channel3_var
             ch4_lut = gui.channel4_var
             microscope_type = gui.microscope_type
+            folder_of_folders = True # set to True because only needed for Flamingo workflow
             
     else: 
         # For testing purposes, set the parameters directly
@@ -114,9 +116,6 @@ def main():
     # Get the Bruker image folders
     if folder_of_folders == True or microscope_type != 'Flamingo':
         image_folders = sorted([folder for folder in os.listdir(parent_folder_path) if os.path.isdir(os.path.join(parent_folder_path, folder))])
-
-    if microscope_type != 'Flamingo':
-        # Initialize output folders, logging, and metadata CSV outout paths
         if not manual_test:
             processed_images_path, scope_folders_path = initializeOutputFolders(parent_folder_path = parent_folder_path)
             metadata_csv_path = os.path.join(processed_images_path, "!image_metadata.csv")
@@ -156,11 +155,12 @@ def main():
     elif microscope_type == 'Flamingo':
         processFlamingoImages(parent_folder_path=parent_folder_path,
                                 projection_type=projection_type,
+                                processed_images_path=processed_images_path,
                                 imagej_tags=imagej_tags,
                                 image_folders=image_folders if folder_of_folders else None
                                 )
           
-    if microscope_type != 'Flamingo' and manual_test == False: # not doing olympus for testing for now  
+    if folder_of_folders == True and manual_test == False: # not doing olympus for testing for now  
         for folder_name in image_folders:
             shutil.move(os.path.join(parent_folder_path, folder_name), os.path.join(scope_folders_path, folder_name))
             # Move all .oif files if they exist to scope_folders

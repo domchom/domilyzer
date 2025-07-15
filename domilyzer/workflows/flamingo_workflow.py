@@ -1,4 +1,5 @@
 import os 
+import tqdm
 
 from domilyzer.functions_gui.flamingo_functions import (
     getNumChannelsFlamingo,
@@ -14,6 +15,7 @@ from domilyzer.functions_gui.general_functions import (
 
 def processFlamingoImages(parent_folder_path: str,
                           projection_type: str,
+                          processed_images_path: str,
                           imagej_tags: dict,
                           image_folders: list = None
                           ) -> None:
@@ -26,7 +28,8 @@ def processFlamingoImages(parent_folder_path: str,
     - imagej_tags (dict): Tags to be used for saving the images in ImageJ format.
     """
     if image_folders is not None:
-        for folder_name in image_folders:
+        for folder_index in tqdm.tqdm(range(len(image_folders)), desc="Processing movies"):
+            folder_name = image_folders[folder_index]
             print('******'*10)
             try:
                 print(f'Processing folder: {folder_name}')
@@ -58,9 +61,8 @@ def processFlamingoImages(parent_folder_path: str,
                                                                         )
 
                 # Create output path for the final hyperstack
-                image_folder = os.path.basename(folder_path)
                 name_suffix = 'MAX' if projection_type == 'max' else 'AVG' if projection_type == 'avg' else 'hyperstack'
-                hyperstack_output_path = f'{folder_path}/{image_folder}_{name_suffix}.tif'
+                hyperstack_output_path = f'{processed_images_path}/{folder_name}_{name_suffix}.tif'
 
                 # Check if the output file already exists
                 if os.path.exists(hyperstack_output_path):
