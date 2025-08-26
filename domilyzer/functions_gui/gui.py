@@ -274,11 +274,11 @@ class FlamingoGUI(tk.Tk):
             self, variable = self.folder_of_folders, text = ' Folder of Folders',
             command=lambda: self.update_checkboxes('folder_of_folders') if self.folder_of_folders.get() else None
         )
-        self.folder_of_folders_button.grid(row = 3, column = 0, padx = 10, sticky = 'W')  
+        self.folder_of_folders_button.grid(row = 4, column = 0, padx = 10, sticky = 'W')  
         
         # create label to explain the checkboxes above
         self.help = ttk.Label(self, text = 'Select none of the above to save full hyperstack')
-        self.help.grid(row=4, column=0, columnspan=2, padx=10, sticky='W')
+        self.help.grid(row=3, column=0, columnspan=2, padx=10, sticky='W')
 
         # create start button
         self.start_button = ttk.Button(self, text = 'Start conversion')
