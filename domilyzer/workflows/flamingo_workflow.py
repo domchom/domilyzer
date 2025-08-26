@@ -27,6 +27,7 @@ def processFlamingoImages(parent_folder_path: str,
     - projection_type (str): Type of projection to be used ('max', 'avg', or None).
     - imagej_tags (dict): Tags to be used for saving the images in ImageJ format.
     """
+    # if image_folders is None, process all TIF files in the parent folder
     if image_folders is not None:
         for folder_index in tqdm.tqdm(range(len(image_folders)), desc="Processing movies"):
             folder_name = image_folders[folder_index]
@@ -95,6 +96,8 @@ def processFlamingoImages(parent_folder_path: str,
             except Exception as e:
                 print(f"Error processing {folder_name}!: {e}")
                 pass
+    
+    # If image_folders is None, process all TIF files in the parent folder
     else:
         tif_filenames = [f for f in os.listdir(parent_folder_path) if f.endswith('.tif') and f.startswith('S')]
         # for reference filename structure: S000_t000000_V000_R0000_X000_Y000_C00_I0_D0_P00366
