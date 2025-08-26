@@ -236,6 +236,8 @@ class FlamingoGUI(tk.Tk):
         self.avg_project.set(False)
         self.max_project = tk.BooleanVar()
         self.max_project.set(True)
+        self.folder_of_folders = tk.BooleanVar()
+        self.folder_of_folders.set(True)
         self.microscope_type = 'Flamingo'
 
         # create LUT dictionary and variables
@@ -267,10 +269,17 @@ class FlamingoGUI(tk.Tk):
         )
         self.avg_project_button.grid(row = 2, column = 0, padx = 10, sticky = 'W')  
         
+         # create folder of folders button
+        self.folder_of_folders_button = ttk.Checkbutton(
+            self, variable = self.folder_of_folders, text = ' Folder of Folders',
+            command=lambda: self.update_checkboxes('folder_of_folders') if self.folder_of_folders.get() else None
+        )
+        self.folder_of_folders_button.grid(row = 4, column = 0, padx = 10, sticky = 'W')  
+        
         # create label to explain the checkboxes above
         self.help = ttk.Label(self, text = 'Select none of the above to save full hyperstack')
         self.help.grid(row=3, column=0, columnspan=2, padx=10, sticky='W')
-        
+
         # create start button
         self.start_button = ttk.Button(self, text = 'Start conversion')
         self.start_button['command'] = self.start_analysis
@@ -282,8 +291,8 @@ class FlamingoGUI(tk.Tk):
         self.cancel_button.grid(row = 9, column = 1, padx = 10, sticky = 'W')
         
         # create label
-        self.help = ttk.Label(self, text = 'Flamingo conversion only works for a single image/movie at a time.\nIt does not currently support a folder containing multiple folders of images/movies')
-        self.help.grid(row=10, column=0, columnspan=4, padx=10, sticky='W')
+        # self.help = ttk.Label(self, text = 'Flamingo conversion only works for a single image/movie at a time.\nIt does not currently support a folder containing multiple folders of images/movies')
+        # self.help.grid(row=10, column=0, columnspan=4, padx=10, sticky='W')
 
         # create LUT selection widgets
         self.channel1_menu = ttk.Combobox(self, textvariable=self.channel1_var, values=list(self.lut_dict.keys()))
@@ -390,6 +399,7 @@ class FlamingoGUI(tk.Tk):
         self.folder_path = self.folder_path.get()
         self.max_project = self.max_project.get()
         self.avg_project = self.avg_project.get()
+        self.folder_of_folders = self.folder_of_folders.get()
         self.channel1_var = self.lut_dict[self.channel1_var.get()]
         self.channel2_var = self.lut_dict[self.channel2_var.get()]
         self.channel3_var = self.lut_dict[self.channel3_var.get()]

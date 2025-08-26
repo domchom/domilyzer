@@ -30,7 +30,7 @@ To use this workflow, follow these steps:
 - **The Flamingo conversion GUI will open if selected:**
 ![Flamingo GUI](./assets/readme/FlamingoGUI.png)
 
-1. Select the folder path containing a single image saved from the microscope. This folder must contain only a single image saved from the microscope. This program does not currently support processing a set of folders. Below is an example of the expected folder structure for Flamingo microscope data:  
+1. Select the folder path containing a single image saved from the microscope. This folder can contain wither only a single image saved from the microscope, or a folder of folders that each contain one movie. Below is an example of the expected folder structure for a single folder from the Flamingo microscope. For batch processing, each individual folder in a folder of folders will have this structure as well.
     ![Example Flamingo Folder](./assets/readme/FlamingoExampleFolder.png)
 
 2. Choose the type of z-projection to be performed on the images. Only MAX or AVG projection can be selected at a time. If no projection is selected, full hyperstacks will be saved. **Note:** This could result in very large files if many Z-planes were acquired.
