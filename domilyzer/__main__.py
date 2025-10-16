@@ -82,7 +82,7 @@ def main():
         magenta[0] = np.arange(256, dtype='uint8')
         magenta[2] = np.arange(256, dtype='uint8')
         
-        parent_folder_path = 'tests/test_data/olympus'
+        parent_folder_path = '/Users/domchom/Desktop/test'
         #parent_folder_path = '/Users/domchom/Documents/GitHub/domilyzer/tests/test_data/bruker_multiplane'
         #parent_folder_path = '/Users/domchom/Desktop/lab/test_data_flamingo/20250418_133945_280DCE_c1647SPY_c2_488phall_417SPY_flourg_cell6'
         avg_projection = False
@@ -92,8 +92,9 @@ def main():
         ch2_lut = green
         ch3_lut = blue
         ch4_lut = magenta
-        microscope_type = 'Olympus' # 'Flamingo' or 'Bruker'
+        microscope_type = 'Bruker' # 'Flamingo' or 'Bruker'
         auto_metadata_extract = True
+        folder_of_folders = False
         
     # Performance tracker
     start_time = timeit.default_timer()

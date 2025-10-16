@@ -66,6 +66,14 @@ def organizeFilesByChannel(folder_tif_filenames: list, microscope_type: str) -> 
             channel_filenames[channel_name] = []
         channel_filenames[channel_name].append(file)
         
+    # Check last file size consistency
+    for channel, files in channel_filenames.items():
+        if len(files) > 1:
+            sizes = [os.path.getsize(f) for f in files]
+            if sizes[-1] != sizes[0]:  # compare last file size to the rest
+                print(f"⚠️ Skipping last frame (incomplete frame)")
+                files.pop(-1)
+                
     return channel_filenames
 
 def saveLogFile(
