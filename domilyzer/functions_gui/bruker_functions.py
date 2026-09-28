@@ -73,30 +73,29 @@ def convertImagesToNumpyArraysBruker(channel_filenames: dict) -> dict:
 
     return channel_image_arrays
 
-def adjustNumpyArrayAxesBruker(hyperstack: np.array, 
+def adjustNumpyArrayAxesBruker(hyperstack: np.array,
                                image_type: str
                                ) -> tuple:
     """
     Adjust the axes of the numpy array based on the image type.
-    
+
     Parameters:
     hyperstack (np.array): The numpy array representing the image stack.
     image_type (str): The type of the image stack.
-    
+
     Returns:
     tuple: A tuple containing the adjusted hyperstack and the updated image type.
     """
-    # Adjust axes based on image type, max projected images do not need to be adjusted
     if image_type == "multi_plane_multi_timepoint" or image_type == "multi_plane_single_timepoint":
-        hyperstack = np.moveaxis(hyperstack, [0, 1, 2, 3, 4], [0, 2, 1, 3, 4])   
-             
-    if image_type == "single_plane" and len(hyperstack.shape) == 5:
-        hyperstack = np.moveaxis(hyperstack, [0, 1, 2, 3, 4], [1, 2, 0, 3, 4])
-        image_type = "single_plane_multi_frame"
-        
-    elif image_type == "single_plane" and len(hyperstack.shape) == 4:
-        image_type = "single_plane_single_frame"
-        
+        hyperstack = np.moveaxis(hyperstack, [0, 1, 2, 3, 4], [0, 2, 1, 3, 4])
+
+    elif image_type == "single_plane":
+        if len(hyperstack.shape) == 5:
+            hyperstack = np.moveaxis(hyperstack, [0, 1, 2, 3, 4], [1, 2, 0, 3, 4])
+            image_type = "single_plane_multi_frame"
+        elif len(hyperstack.shape) == 4:
+            image_type = "single_plane_single_frame"
+
     return hyperstack, image_type
 
 def projectNumpyArraysBruker(hyperstack: np.array, 

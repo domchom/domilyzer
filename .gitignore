@@ -3,3 +3,5 @@
 
 # Ignore Python bytecode files
 *.pyc
+# Claude Code worktrees
+.claude/worktrees/
