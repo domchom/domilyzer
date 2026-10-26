@@ -6,6 +6,16 @@ switch between each other via ``runner.main``. Set ``MANUAL_TEST`` to run a
 single conversion headlessly against ``TEST_FOLDER`` without opening any window.
 """
 
+import os
+import sys
+
+# When launched as a script (``python domilyzer/__main__.py`` or the IDE's Run
+# button), Python puts this file's folder on sys.path instead of the repo root,
+# so ``import domilyzer`` fails unless the package happens to be installed.
+# Add the repo root so it works on a fresh machine either way.
+if __package__ in (None, ""):
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import numpy as np
 
 from domilyzer.runner import main, run_conversion

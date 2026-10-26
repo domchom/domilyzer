@@ -10,6 +10,7 @@ packages = [{include = "domilyzer"}]
 python = ">=3.8"
 tifffile = "2021.7.2"
 tqdm = "4.65.0"
+oiffile = ">=2022.9.29"
 
 [build-system]
 requires = ["poetry-core"]
